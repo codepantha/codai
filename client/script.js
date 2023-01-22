@@ -53,7 +53,7 @@ const chatStripe = (isAi, value, uniqueId) => {
   `;
 };
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
@@ -74,6 +74,37 @@ const handleSubmit = (e) => {
 
   const messageDiv = document.getElementById(uniqueId);
   loader(messageDiv);
+
+  // Get data from server
+  const response = await fetch('http://localhost:5000', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      prompt: formData.get('prompt')
+    })
+  });
+
+  // clear the interval to stop the loading
+  clearInterval(loadInterval);
+  // empty the messageDiv container
+  messageDiv.innerText = '';
+
+  if (!response.ok) {
+    const err = await response.text();
+    messageDiv.innerText = 'Something bad happened...';
+    alert(err);
+    return;
+  }
+
+  form.reset();
+
+  const data = await response.json();
+  const parsedData = data.bot.trim();
+
+  typeText(messageDiv, parsedData);
+  
 };
 
 form.addEventListener('submit', handleSubmit);
