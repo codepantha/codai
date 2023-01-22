@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-  res.status(200).send({ message: 'Hello from Codai' });
+  res.status(200).send({ message: 'Hello, my name is Codai. \n You can ask me anything!' });
 });
 
 app.post('/', async (req, res) => {

@@ -111,3 +111,14 @@ form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {
   if (e.key === 'Enter') handleSubmit(e);
 });
+
+window.addEventListener('load', async () => {
+  const uniqueId = generateUniqueId()
+  chatContainer.innerHTML += chatStripe(true, '', uniqueId);
+
+  const response = await fetch('http://localhost:5000');
+  const data = await response.json();
+
+  const messageDiv = document.getElementById(uniqueId);
+  typeText(messageDiv, data.message);
+})
