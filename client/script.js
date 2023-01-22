@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   // Get data from server
-  const response = await fetch('http://localhost:5000', {
+  const response = await fetch('https://codai-4fws.onrender.com/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ window.addEventListener('load', async () => {
   const uniqueId = generateUniqueId()
   chatContainer.innerHTML += chatStripe(true, '', uniqueId);
 
-  const response = await fetch('http://localhost:5000');
+  const response = await fetch('https://codai-4fws.onrender.com/');
   const data = await response.json();
 
   const messageDiv = document.getElementById(uniqueId);
